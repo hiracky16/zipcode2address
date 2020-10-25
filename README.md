@@ -1,41 +1,30 @@
-# UPDATE
+# zipcode2address
 
-Starting from [version 1.26](https://github.com/serverless/serverless/releases/tag/v1.26.0) Serverless Framework includes two Golang templates:
+Searching japanese address by zipcode.
+Using serverless framework and Golang.
 
-* `aws-go` - basic template with two functions
-* `aws-go-dep` - **recommended** template using [`dep`](https://github.com/golang/dep) package manager
+# feature
 
-You can use them with `create` command:
+## import
 
-```
-serverless create -t aws-go-dep
-```
+Importing japanese address data to DynamoDB.
 
-Original README below.
+## search
 
----
+Searching address by zipcode.
 
-# Serverless Template for Golang
+# deploy
 
-This repository contains template for creating serverless services written in Golang.
-
-## Quick Start
-
-1. Create a new service based on this template
+1. Prepare environments
 
 ```
-serverless create -u https://github.com/serverless/serverless-golang/ -p myservice
+mkdir env
+touch env/dev.yml
+touch env/prod.yml
 ```
 
-2. Compile function
+2. deploy
 
 ```
-cd myservice
-GOOS=linux go build -o bin/main
-```
-
-3. Deploy!
-
-```
-serverless deploy
+sh deploy.sh
 ```
