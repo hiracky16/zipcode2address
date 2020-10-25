@@ -46,15 +46,15 @@ func download() string {
 
   // file に書き込み
   _, filename := path.Split(url)
-  filepath := filename
-  file, err := os.OpenFile(filepath, os.O_CREATE|os.O_WRONLY, 0666)
+  filepath := "/tmp/" + filename
+  file, err := os.OpenFile(filepath, os.O_CREATE|os.O_WRONLY, 0777)
   if err != nil {
 		fmt.Println(err)
 		os.Exit(1)
   }
   defer file.Close()
   file.Write(body)
-	return filename
+	return filepath
 }
 
 func defrost(file string) string {
@@ -63,7 +63,7 @@ func defrost(file string) string {
   svc := s3.New(session.New(), &aws.Config{
     Region: aws.String(endpoints.ApNortheast1RegionID),
   })
-  uz := unzip.New(file, "downloads")
+  uz := unzip.New(file, "/tmp/")
   unzipErr := uz.Extract()
   if unzipErr != nil {
     fmt.Println(unzipErr)
@@ -71,7 +71,7 @@ func defrost(file string) string {
   }
   // FIXME: ファイル名
   filename := "zenkoku.csv"
-  f, err := os.Open("downloads/" + filename)
+  f, err := os.Open("/tmp/" + filename)
   if err != nil {
     fmt.Println(err)
     os.Exit(1)
@@ -84,7 +84,7 @@ func defrost(file string) string {
     ACL: aws.String("private"),
     ServerSideEncryption: aws.String("AES256"),
   })
-  return "downloads/" + filename
+  return "/tmp/" + filename
 }
 
 func parse(file string) {
