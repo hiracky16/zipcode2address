@@ -27,7 +27,6 @@ type AddressData struct {
 }
 
 func download() string {
-  // var url = "http://jusyo.jp/downloads/new/csv/csv_zenkoku.zip"
   var url = os.Getenv("CSV_SOURCE")
 
   // ファイルをダウンロード
@@ -59,7 +58,6 @@ func download() string {
 }
 
 func defrost(file string) string {
-  // var bucket = "zipcode-file-dev"
   // s3 への接続情報
   var bucket = os.Getenv("BUCKET")
   svc := s3.New(session.New(), &aws.Config{
@@ -93,7 +91,6 @@ func parse(file string) {
   db := dynamo.New(session.New(), &aws.Config{
     Region: aws.String(endpoints.ApNortheast1RegionID),
   })
-  // var tableName = "zipcodes-dev"
   var tableName = os.Getenv("TABLE")
   table := db.Table(tableName)
 
