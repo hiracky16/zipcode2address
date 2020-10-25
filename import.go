@@ -11,10 +11,10 @@ import (
   "golang.org/x/text/encoding/japanese"
   "strings"
 
-	"github.com/artdarek/go-unzip"
+  "github.com/artdarek/go-unzip"
   "github.com/aws/aws-lambda-go/lambda"
   "github.com/aws/aws-sdk-go/aws/endpoints"
-	"github.com/aws/aws-sdk-go/aws/session"
+  "github.com/aws/aws-sdk-go/aws/session"
   "github.com/aws/aws-sdk-go/service/s3"
   "github.com/aws/aws-sdk-go/aws"
   "github.com/guregu/dynamo"
@@ -31,14 +31,14 @@ func download() string {
 
   // ファイルをダウンロード
   fmt.Println(url)
-	response, err := http.Get(url)
-	if err != nil {
+  response, err := http.Get(url)
+  if err != nil {
     fmt.Println(err)
     os.Exit(1)
-	}
-	fmt.Println("status:", response.Status)
+  }
+  fmt.Println("status:", response.Status)
 
-	body, err := ioutil.ReadAll(response.Body)
+  body, err := ioutil.ReadAll(response.Body)
   if err != nil {
     fmt.Println(err)
     os.Exit(1)
@@ -49,12 +49,12 @@ func download() string {
   filepath := "/tmp/" + filename
   file, err := os.OpenFile(filepath, os.O_CREATE|os.O_WRONLY, 0777)
   if err != nil {
-		fmt.Println(err)
-		os.Exit(1)
+    fmt.Println(err)
+    os.Exit(1)
   }
   defer file.Close()
   file.Write(body)
-	return filepath
+  return filepath
 }
 
 func defrost(file string) string {
@@ -145,7 +145,7 @@ func tranform(str string) string {
 }
 
 func Handler() {
-	file := download()
+  file := download()
   fmt.Println(fmt.Sprintf("download %s", file))
   csv := defrost(file)
   parse(csv)
